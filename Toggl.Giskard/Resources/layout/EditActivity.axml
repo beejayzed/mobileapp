@@ -261,7 +261,7 @@
                 android:layout_alignBottom="@id/EditTimeSeparator">
                 <TextView
                     android:id="@+id/EditStartValueLabel"
-                    local:MvxBind="Text DateTimeToTime(StartTime)"
+                    local:MvxBind="Text DateTimeToTime(StartTime) + ' ' + ShortDateTimeOffsetDateFormat(StartTime, DateFormat)"
                     tools:text="11:25 AM"
                     android:textSize="15sp"
                     android:textColor="@color/darkLabel"
@@ -293,7 +293,7 @@
                 android:layout_alignBottom="@id/EditTimeSeparator">
                 <TextView
                     android:id="@+id/EditEndValueLabel"
-                    local:MvxBind="Text DateTimeToTime(StopTime); Visibility Visibility(!IsTimeEntryRunning, true)"
+                    local:MvxBind="Text DateTimeToTime(StopTime) + ' ' + ShortDateTimeOffsetDateFormat(StopTime, DateFormat); Visibility Visibility(!IsTimeEntryRunning, true)"
                     tools:text="11:48 AM"
                     android:textSize="15sp"
                     android:textColor="@color/darkLabel"
@@ -357,31 +357,6 @@
                 android:layout_marginLeft="56dp"
                 android:layout_width="match_parent"
                 android:layout_below="@id/EditDuration" />
-            <ImageView
-                android:id="@+id/EditDateIcon"
-                android:scaleType="center"
-                android:src="@drawable/date"
-                android:layout_width="56dp"
-                android:layout_height="48dp"
-                android:layout_below="@id/EditDurationBottomBorder" />
-            <TextView
-                android:id="@+id/EditDateValueLabel"
-                local:MvxBind="Text DateToTitleString(StartTime); Click SelectStartDateCommand"
-                tools:text="Tue, 14 Nov"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:textColor="@color/darkLabel"
-                android:background="?attr/selectableItemBackground"
-                android:layout_height="48dp"
-                android:layout_width="match_parent"
-                android:layout_alignTop="@id/EditDateIcon"
-                android:layout_toRightOf="@id/EditDateIcon" />
-            <View
-                android:background="@color/separator"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="56dp"
-                android:layout_width="match_parent"
-                android:layout_below="@id/EditDateValueLabel" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
