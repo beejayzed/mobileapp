@@ -275,7 +275,7 @@
                     android:textSize="12sp"
                     android:text="@string/StartTime"
                     android:textColor="@color/defaultText"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/EditStartValueLabel"
@@ -317,7 +317,7 @@
                     android:textSize="12sp"
                     android:text="@string/EndTime"
                     android:textColor="@color/defaultText"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/EditEndValueLabel"
@@ -339,17 +339,32 @@
                 android:layout_marginLeft="56dp"
                 android:layout_width="match_parent"
                 android:layout_below="@id/EditBillableRow" />
-            <toggl.giskard.views.DurationEditText
+            <LinearLayout
+                android:orientation="vertical"
                 android:id="@+id/EditDuration"
-                local:MvxBind="Duration DisplayedDuration"
-                android:textSize="15sp"
-                android:inputType="numberPassword"
-                android:textColor="@color/darkLabel"
-                android:background="@android:color/transparent"
-                android:layout_height="48dp"
+                android:layout_height="72dp"
                 android:layout_width="match_parent"
                 android:layout_below="@id/EditTimesBottomBorder"
-                android:layout_toRightOf="@id/EditTimeEntryColumnAnchor" />
+                android:layout_toRightOf="@id/EditTimeEntryColumnAnchor">
+                <toggl.giskard.views.DurationEditText
+                    local:MvxBind="Duration DisplayedDuration"
+                    android:textSize="15sp"
+                    android:inputType="numberPassword"
+                    android:textColor="@color/darkLabel"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="0:11:25" />
+                <TextView
+                    android:id="@+id/EditTimeEntryDurationLabel"
+                    android:textSize="12sp"
+                    android:text="@string/Duration"
+                    android:textColor="@color/defaultText"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <View
                 android:id="@+id/EditDurationBottomBorder"
                 android:background="@color/separator"
@@ -357,6 +372,32 @@
                 android:layout_marginLeft="56dp"
                 android:layout_width="match_parent"
                 android:layout_below="@id/EditDuration" />
+            <ImageView
+                android:id="@+id/EditTimeEntryDeleteIcon"
+                local:MvxBind="Click DeleteCommand"
+                android:scaleType="center"
+                android:src="@drawable/delete"
+                android:layout_width="56dp"
+                android:layout_height="48dp"
+                android:layout_below="@id/EditDateValueBottomBorder" />
+            <TextView
+                android:id="@+id/EditTimeEntryDeleteLabel"
+                local:MvxBind="Click DeleteCommand"
+                android:text="@string/DeleteEntry"
+                android:textSize="15sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/errorText"
+                android:background="?attr/selectableItemBackground"
+                android:layout_height="48dp"
+                android:layout_width="match_parent"
+                android:layout_alignTop="@id/EditTimeEntryDeleteIcon"
+                android:layout_toRightOf="@id/EditTimeEntryDeleteIcon" />
+            <View
+                android:background="@color/separator"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="56dp"
+                android:layout_width="match_parent"
+                android:layout_below="@id/EditTimeEntryDeleteLabel" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

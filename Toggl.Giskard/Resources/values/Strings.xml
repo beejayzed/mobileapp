@@ -41,6 +41,8 @@
     <string name="ManualModeExplanation">You can add your data manually, instead of tracking in real time.</string>
     <string name="TryLoggingInInstead"><u>Try logging in instead.</u></string>
     <string name="ForgotPassword">Forgot your password?</string>
+    <string name="Duration">Duration</string>
+    <string name="DeleteEntry">Delete this entry</string>
 
     <string name="MainTemplateSelector" translatable="false">Toggl.Giskard.TemplateSelectors.MainTemplateSelector, Toggl.Giskard</string>
     <string name="ReportsTemplateSelector" translatable="false">Toggl.Giskard.TemplateSelectors.ReportsTemplateSelector, Toggl.Giskard</string>

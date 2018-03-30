@@ -30,10 +30,8 @@ namespace Toggl.Giskard.Bindings
 
         protected override void SetValueImpl(EditText target, bool value)
         {
-            if (value)
-                target.RequestFocus();
-            else
-                target.RemoveFocus();
+            if (value) target.RequestFocus();
+            else target.RemoveFocus();
         }
 
         protected override void Dispose(bool isDisposing)
