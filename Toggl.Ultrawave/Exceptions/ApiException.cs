@@ -20,12 +20,16 @@ namespace Toggl.Ultrawave.Exceptions
             Request = request;
             Response = response;
 
-            if (response.ContentType.Equals("application/json")) {
-                var serializer = new JsonSerializer();
-                var error = serializer.Deserialize<ResponseError>(response.RawData);
-                this.message = error.Message;
+            if (response.IsJson) {
+                try {
+                    var serializer = new JsonSerializer();
+                    var error = serializer.Deserialize<ResponseError>(response.RawData);
+                    this.message = error.Message;
+                } catch {
+                    this.message = defaultMessage;
+                }
             } else {
-                this.message = defaultMessage;   
+                this.message = defaultMessage;
             }
         }
 

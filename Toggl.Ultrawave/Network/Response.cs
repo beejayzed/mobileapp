@@ -12,6 +12,8 @@ namespace Toggl.Ultrawave.Network
         public HttpStatusCode StatusCode { get; }
         public IEnumerable<KeyValuePair<string, IEnumerable<string>>> Headers { get; }
 
+        public bool IsJson => ContentType.Equals("application/json");
+
         public Response(string rawData, bool isSuccess, string contentType, IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers, HttpStatusCode statusCode)
         {
             Ensure.Argument.IsNotNull(rawData, nameof(rawData));

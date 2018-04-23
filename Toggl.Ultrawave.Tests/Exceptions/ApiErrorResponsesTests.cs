@@ -163,8 +163,8 @@ namespace Toggl.Ultrawave.Tests.Exceptions
             [Fact, LogIfTooSlow]
             public void SerializesErrorsAsJsonInResponse()
             {
-                string message = "Couldn't find workspace with id blah blah blah....";
-                string body = $"{{\"message\": \"{message}\"}}"; 
+                var message = "Couldn't find workspace with id blah blah blah....";
+                var body = $"{{\"message\": \"{message}\"}}"; 
                 var endpoint = new Uri("https://www.some.url");
                 var method = new HttpMethod("GET");
                 var request = new Request("", endpoint, new HttpHeader[0], method);

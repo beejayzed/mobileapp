@@ -14,5 +14,7 @@ namespace Toggl.Ultrawave.Network
         HttpStatusCode StatusCode { get; }
 
         IEnumerable<KeyValuePair<string, IEnumerable<string>>> Headers { get; }
+
+        bool IsJson { get; }
     }
 }
