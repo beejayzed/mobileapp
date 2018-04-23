@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Toggl.Ultrawave.Models;
 using Toggl.Ultrawave.Network;
+using Toggl.Ultrawave.Serialization;
 
 namespace Toggl.Ultrawave.Exceptions
 {
@@ -13,11 +15,18 @@ namespace Toggl.Ultrawave.Exceptions
 
         private readonly string message;
 
-        internal ApiException(IRequest request, IResponse response, string message)
+        internal ApiException(IRequest request, IResponse response, string defaultMessage)
         {
             Request = request;
             Response = response;
-            this.message = message;
+
+            if (response.ContentType.Equals("application/json")) {
+                var serializer = new JsonSerializer();
+                var error = serializer.Deserialize<ResponseError>(response.RawData);
+                this.message = error.Message;
+            } else {
+                this.message = defaultMessage;   
+            }
         }
 
         public string LocalizedApiErrorMessage
