@@ -16,5 +16,7 @@ namespace Toggl.Ultrawave.Network
         IEnumerable<KeyValuePair<string, IEnumerable<string>>> Headers { get; }
 
         bool IsJson { get; }
+
+        bool IsText { get; }
     }
 }

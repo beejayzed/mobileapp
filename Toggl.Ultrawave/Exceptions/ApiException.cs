@@ -13,28 +13,17 @@ namespace Toggl.Ultrawave.Exceptions
 
         internal IResponse Response { get; }
 
+        public string LocalizedApiErrorMessage { get; }
+
         private readonly string message;
 
         internal ApiException(IRequest request, IResponse response, string defaultMessage)
         {
             Request = request;
             Response = response;
-
-            if (response.IsJson) {
-                try {
-                    var serializer = new JsonSerializer();
-                    var error = serializer.Deserialize<ResponseError>(response.RawData);
-                    this.message = error.Message;
-                } catch {
-                    this.message = defaultMessage;
-                }
-            } else {
-                this.message = defaultMessage;
-            }
+            LocalizedApiErrorMessage = getLocalizedMessageFromResponse(response) ?? defaultMessage;
+            this.message = defaultMessage;
         }
-
-        public string LocalizedApiErrorMessage
-            => Response.RawData;
 
         public override string ToString()
             => $"{GetType().Name} for request {Request.HttpMethod} {Request.Endpoint}: "
@@ -48,5 +37,27 @@ namespace Toggl.Ultrawave.Exceptions
             => String.Join(", ", headers.Select(pair => $"'{pair.Key}': [{String.Join(", ", pair.Value.Select(v => $"'{v}'").ToArray())}]").ToArray());
 
         public override string Message => ToString();
+
+        private string getLocalizedMessageFromResponse(IResponse response)
+        {
+            if (response.IsJson)
+            {
+                try
+                {
+                    var serializer = new JsonSerializer();
+                    var error = serializer.Deserialize<ResponseError>(response.RawData);
+                    return error.Message;
+                }
+                catch (DeserializationException<ResponseError>)
+                {
+                    return null;
+                }
+            }
+            else if (response.IsText)
+            {
+                return response.RawData;
+            }
+            return null;
+        }
     }
 }

@@ -161,20 +161,43 @@ namespace Toggl.Ultrawave.Tests.Exceptions
             }
 
             [Fact, LogIfTooSlow]
-            public void SerializesErrorsAsJsonInResponse()
+            public void DeserializesLocalizedErrorMessageAsJsonInResponse()
             {
-                var message = "Couldn't find workspace with id blah blah blah....";
+                var message = "Couldn't find workspace with id blah blah blah...";
                 var body = $"{{\"message\": \"{message}\"}}"; 
                 var endpoint = new Uri("https://www.some.url");
                 var method = new HttpMethod("GET");
                 var request = new Request("", endpoint, new HttpHeader[0], method);
                 var response = new Response(body, false, "application/json", new List<KeyValuePair<string, IEnumerable<string>>>(), HttpStatusCode.NotFound);
                 var exception = new NotFoundException(request, response);
-                var expectedSerialization = $"NotFoundException for request {method} {endpoint}: Response: (Status: [404 NotFound]) (Headers: []) (Body: {body}) (Message: {message})";
 
-                var serialized = exception.ToString();
+                exception.LocalizedApiErrorMessage.Should().Be(message);
+            }
 
-                serialized.Should().Be(expectedSerialization);
+            [Fact, LogIfTooSlow]
+            public void DeserializesLocalizedErrorMessageAsTextInResponse()
+            {
+                var body = "Couldn't find workspace with id blah blah blah....";
+                var endpoint = new Uri("https://www.some.url");
+                var method = new HttpMethod("GET");
+                var request = new Request("", endpoint, new HttpHeader[0], method);
+                var response = new Response(body, false, "text/plain", new List<KeyValuePair<string, IEnumerable<string>>>(), HttpStatusCode.NotFound);
+                var exception = new NotFoundException(request, response);
+
+                exception.LocalizedApiErrorMessage.Should().Be(body);
+            }
+
+            [Fact, LogIfTooSlow]
+            public void UsesTheDefaultMessageForOtherContentTypes()
+            {
+                var body = "Couldn't find workspace with id blah blah blah....";
+                var endpoint = new Uri("https://www.some.url");
+                var method = new HttpMethod("GET");
+                var request = new Request("", endpoint, new HttpHeader[0], method);
+                var response = new Response(body, false, "foo/bar", new List<KeyValuePair<string, IEnumerable<string>>>(), HttpStatusCode.NotFound);
+                var exception = new NotFoundException(request, response);
+
+                exception.LocalizedApiErrorMessage.Should().Be("The resource was not found.");
             }
         }
 
@@ -182,7 +205,7 @@ namespace Toggl.Ultrawave.Tests.Exceptions
             => new Request("{\"a\":123}", new Uri("https://integration.tests"), new[] { new HttpHeader("X", "Y") }, method);
 
         private static Response createErrorResponse(HttpStatusCode code, string contentType = "plain/text", string rawData = "")
-        => new Response(rawData, false, contentType, new List<KeyValuePair<string, IEnumerable<string>>>(), code);
+            => new Response(rawData, false, contentType, new List<KeyValuePair<string, IEnumerable<string>>>(), code);
 
         public static IEnumerable<object[]> ClientErrorsList
             => new[]
