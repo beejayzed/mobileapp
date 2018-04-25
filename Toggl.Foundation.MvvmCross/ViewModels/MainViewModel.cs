@@ -17,6 +17,7 @@ using Toggl.Foundation.Sync;
 using Toggl.Multivac;
 using Toggl.PrimeRadiant.Models;
 using Toggl.PrimeRadiant.Settings;
+using System.Reactive;
 using Toggl.Foundation.Suggestions;
 
 [assembly: MvxNavigation(typeof(MainViewModel), ApplicationUrls.Main.Regex)]
@@ -174,12 +175,11 @@ namespace Toggl.Foundation.MvvmCross.ViewModels
                 .ProgressObservable
                 .Subscribe(progress => SyncingProgress = progress);
 
-            var isEmptyChangedDisposable = dataSource
-                .TimeEntries
-                .TimeEntryUpdated
-                .Select(te => te.Id)
-                .Merge(dataSource.TimeEntries.TimeEntryDeleted)
-                .Subscribe((long _) =>
+            var isEmptyChangedDisposable = Observable.Empty<Unit>()
+                .Merge(dataSource.TimeEntries.TimeEntryUpdated.Select(_ => Unit.Default))
+                .Merge(dataSource.TimeEntries.TimeEntryDeleted.Select(_ => Unit.Default))
+                .Merge(dataSource.TimeEntries.TimeEntryCreated.Select(_ => Unit.Default))
+                .Subscribe(_ =>
                 {
                     RaisePropertyChanged(nameof(ShouldShowTimeEntriesLog));
                     RaisePropertyChanged(nameof(ShouldShowWelcomeBack));

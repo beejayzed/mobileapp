@@ -21,7 +21,6 @@ namespace Toggl.Foundation.MvvmCross.ViewModels
     [Preserve(AllMembers = true)]
     public sealed class TimeEntriesLogViewModel : MvxViewModel
     {
-        private static readonly TimeSpan timeEntryCreationBufferDuration = TimeSpan.FromMilliseconds(100);
         private readonly CompositeDisposable disposeBag = new CompositeDisposable();
 
         private readonly ITimeService timeService;

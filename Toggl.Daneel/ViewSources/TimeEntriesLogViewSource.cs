@@ -57,7 +57,7 @@ namespace Toggl.Daneel.ViewSources
                 handleDeleteTableViewRowAction);
             deleteTableViewRowAction.BackgroundColor = Color.TimeEntriesLog.DeleteSwipeActionBackground.ToNativeColor();
 
-            firstTimeEntrySubject = new BehaviorSubject<TimeEntriesLogViewCell>(null);
+            firstTimeEntrySubject = new ReplaySubject<TimeEntriesLogViewCell>(1);
             FirstTimeEntry = firstTimeEntrySubject.AsObservable();
         }
 

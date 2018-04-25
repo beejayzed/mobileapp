@@ -189,11 +189,11 @@ time entries will appear here.</value>
     <data name="SetDefaultWorkspace">
         <value>Set default workspace</value>
     </data>
-    <data name="AddTags">
-        <value>Add a tag</value>
+    <data name="EnterTag">
+        <value>Enter tag name</value>
     </data>
-    <data name="AddProject">
-        <value>Add a project</value>
+    <data name="EnterProject">
+        <value>Enter project name</value>
     </data>
     <data name="PasswordResetExplanation">
         <value>Please enter your email to reset your password.</value>

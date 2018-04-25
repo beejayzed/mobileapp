@@ -56,10 +56,11 @@ namespace Toggl.PrimeRadiant.Tests
         {
             const int numberOfItems = 5;
 
-            await Enumerable.Range(0, numberOfItems)
-                            .Select(GetModelWith)
-                            .Select(async model => await Repository.Create(model))
-                            .Apply(Task.WhenAll);
+            for (int i = 0; i < numberOfItems; ++i)
+            {
+                var model = GetModelWith(i);
+                await Repository.Create(model);
+            }
             
             var entities = await Repository.GetAll(_ => true);
             entities.Count().Should().Be(numberOfItems);

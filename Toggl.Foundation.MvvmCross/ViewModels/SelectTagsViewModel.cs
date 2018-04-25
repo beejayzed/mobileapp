@@ -51,7 +51,7 @@ namespace Toggl.Foundation.MvvmCross.ViewModels
         [DependsOn(nameof(IsEmpty))]
         public string PlaceholderText
             => IsEmpty
-            ? Resources.AddTags
+            ? Resources.EnterTag
             : Resources.AddFilterTags;
 
         public IMvxAsyncCommand CloseCommand { get; }
