@@ -1,7 +1,10 @@
-﻿namespace Toggl.Ultrawave.Models
+﻿using Newtonsoft.Json;
+
+namespace Toggl.Ultrawave.Models
 {
     internal sealed class ResponseError
     {
-        public string Message { get; }
+        [JsonProperty("message")]
+        public string Message { get; set; }
     }
 }

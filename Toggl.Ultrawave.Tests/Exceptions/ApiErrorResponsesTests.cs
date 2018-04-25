@@ -163,13 +163,14 @@ namespace Toggl.Ultrawave.Tests.Exceptions
             [Fact, LogIfTooSlow]
             public void DeserializesLocalizedErrorMessageAsJsonInResponse()
             {
+                var defaultMessage = "Default message";
                 var message = "Couldn't find workspace with id blah blah blah...";
                 var body = $"{{\"message\": \"{message}\"}}"; 
                 var endpoint = new Uri("https://www.some.url");
                 var method = new HttpMethod("GET");
                 var request = new Request("", endpoint, new HttpHeader[0], method);
                 var response = new Response(body, false, "application/json", new List<KeyValuePair<string, IEnumerable<string>>>(), HttpStatusCode.NotFound);
-                var exception = new NotFoundException(request, response);
+                var exception = new ApiException(request, response, defaultMessage);
 
                 exception.LocalizedApiErrorMessage.Should().Be(message);
             }
@@ -177,12 +178,13 @@ namespace Toggl.Ultrawave.Tests.Exceptions
             [Fact, LogIfTooSlow]
             public void DeserializesLocalizedErrorMessageAsTextInResponse()
             {
+                var defaultMessage = "Default message";
                 var body = "Couldn't find workspace with id blah blah blah....";
                 var endpoint = new Uri("https://www.some.url");
                 var method = new HttpMethod("GET");
                 var request = new Request("", endpoint, new HttpHeader[0], method);
                 var response = new Response(body, false, "text/plain", new List<KeyValuePair<string, IEnumerable<string>>>(), HttpStatusCode.NotFound);
-                var exception = new NotFoundException(request, response);
+                var exception = new ApiException(request, response, defaultMessage);
 
                 exception.LocalizedApiErrorMessage.Should().Be(body);
             }
@@ -190,14 +192,15 @@ namespace Toggl.Ultrawave.Tests.Exceptions
             [Fact, LogIfTooSlow]
             public void UsesTheDefaultMessageForOtherContentTypes()
             {
+                var defaultMessage = "Default message";
                 var body = "Couldn't find workspace with id blah blah blah....";
                 var endpoint = new Uri("https://www.some.url");
                 var method = new HttpMethod("GET");
                 var request = new Request("", endpoint, new HttpHeader[0], method);
                 var response = new Response(body, false, "foo/bar", new List<KeyValuePair<string, IEnumerable<string>>>(), HttpStatusCode.NotFound);
-                var exception = new NotFoundException(request, response);
+                var exception = new ApiException(request, response, defaultMessage);
 
-                exception.LocalizedApiErrorMessage.Should().Be("The resource was not found.");
+                exception.LocalizedApiErrorMessage.Should().Be(defaultMessage);
             }
         }
 
