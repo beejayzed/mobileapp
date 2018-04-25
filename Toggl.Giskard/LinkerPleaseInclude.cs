@@ -11,6 +11,7 @@ using MvvmCross.Core.Navigation;
 using MvvmCross.Core.ViewModels;
 using V4Space = Android.Support.V4.Widget.Space;
 using Newtonsoft.Json.Converters;
+using Firebase.Provider;
 
 namespace Toggl.Giskard
 {
@@ -187,6 +188,11 @@ namespace Toggl.Giskard
             Console.ForegroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.DarkGray;
+        }
+
+        public void Include(FirebaseInitProvider provider)
+        {
+            provider = new FirebaseInitProvider();
         }
     }
 }
