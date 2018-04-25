@@ -260,7 +260,7 @@ namespace Toggl.Foundation.MvvmCross.ViewModels
         public async override Task Initialize()
         {
             await base.Initialize();
-            
+
             TextFieldInfo =
                 await dataSource.User.Current.Select(user => TextFieldInfo.Empty(user.DefaultWorkspaceId));
 
